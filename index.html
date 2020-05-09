@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arkanoid Intergalactic - P5.js + Matter.js</title>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    <script src="js/p5.min.js"></script>
+    <script src="js/matter.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            /* disable selecting text */
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed */
+        }
+        body {
+            cursor: none;
+            font-family: Verdana;
+            font-family: 'Audiowide', cursive;
+            display: table;
+            margin:0 auto;
+            background-color: #222;
+            color: white;
+            font-size: 13pt;
+        }
+        #javascript_enable_info {
+            display: block;
+            margin-top: 10vh;
+        }
+        canvas {
+            display: table;
+            margin:0 auto;
+        }
+        p {
+            display: table;
+            margin: 0 auto;
+            color: white
+        }
+        .scoreDiv {
+            display: flex;
+            flex-direction: row;
+            justify-content:space-around;
+            width: 100%;
+            font-size: 40pt;
+        }
+        .ballsLeftDiv, .gamePointsDiv {
+            padding-left: 4mm;
+            padding-right: 4mm;
+            text-align: left;
+        }
+        .ballsLeftDiv {
+            width: 80%;
+        }
+        .gamePointsDiv {
+            width: 20%;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <h id="javascript_enable_info">Enable Javascript to play the game.</h>
+    <script src="js/box.js"></script>
+    <script src="js/ball.js"></script>
+    <script src="js/ground.js"></script>
+    <script src="js/paddle.js"></script>
+    <script src="js/star.js"></script>
+    <script src="js/sketch.js"></script>
+</body>
+</html>
