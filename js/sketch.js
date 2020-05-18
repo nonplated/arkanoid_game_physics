@@ -16,6 +16,7 @@ const {
 
 const MAX_BALLS = 2;
 var ballsLeft = MAX_BALLS; // how many balls will player have on startup;
+var paddleSize = 100;
 
 let grounds = [];
 let boxes = [];
@@ -37,6 +38,9 @@ var isGamePaused = true;
 var ballsLeftDiv; // where the ball left will appear
 var gamePointsDiv; //where points will be displayed
 var scoreDiv; // where the gamePointsDiv and ballsLeftDiv will be
+
+var gamePoints = 0;
+var pointsBonus = false;
 
 var themes = [
     //color_light, color_darker, color_darkest, board_background, walls
@@ -64,7 +68,7 @@ function setup() {
     const canvas = createCanvas(600, 600);
 
     createP().html("Hit ENTER to start.");
-    createP().html("Press SPACE to increase speed of the ball.");
+    createP().html("Press SPACE for more power and points.");
     createP().html("Use &#x2BC7; and &#x2BC8; to move the paddle.");
 
     engine = Engine.create();
@@ -81,7 +85,6 @@ function setup() {
     makeBall();
     resetBall();
     makePuzzle();
-    // check puzzle matrix rows:4 x cols:6 bcs of some double elements.
 
     setCollisionEvent();
 
@@ -172,6 +175,7 @@ function setCollisionEvent() {
                         if (box.setTouched()) {
                             countBoxes += 1;
                             countActiveBoxes -= 1;
+                            addGamePoints('box', (pointsBonus ? 3 : 1) );
                         }
                     }
                 });
@@ -181,7 +185,7 @@ function setCollisionEvent() {
 }
 
 function makePaddle() {
-    paddle = new Paddle(width / 2, paddleHeight, 70, 25);
+    paddle = new Paddle(width / 2, paddleHeight, paddleSize, 25);
 }
 
 function makeRandomBlocks(cols, rows) {
@@ -253,6 +257,7 @@ function removeLostObjects() {
             World.remove(world, star.body);
             countStars += 1;
             star.setRemoved(true);
+            addGamePoints('star');
         }
     });
     if (ball.body.position.y > height) {
@@ -281,13 +286,21 @@ function keyPressed() {
 
     if (key === " ") {
         paddle.setIncreasePower(true);
+        pointsBonus = true; // will reset to false after key release
     }
 }
 
 function keyReleased() {
     if (key === " ") {
         paddle.setIncreasePower(false);
+        pointsBonus = false;
     }
+}
+
+function addGamePoints( hitName, bonus = 1 ) {
+    if (hitName==='box') { gamePoints+= 5 * bonus; }
+    if (hitName==='star') { gamePoints+= 1 * bonus; }
+    if (hitName==='new_puzzle') { gamePoints+= 25; }
 }
 
 function draw() {
@@ -323,6 +336,7 @@ function draw() {
             resetBall();
             resetPaddle();
             isGamePaused = true;
+            addGamePoints('new_puzzle');
         }
 
         if (keyIsDown(LEFT_ARROW)) {
@@ -333,7 +347,7 @@ function draw() {
         }
         paddle.show();
 
-        let gamePoints = countBoxes * 5 + countStars * 1;
+        //let gamePoints = countBoxes * 5 + countStars * 1;
 
         ballsLeftDiv.html(ballsLeft);
         gamePointsDiv.html(gamePoints);
