@@ -284,14 +284,15 @@ function keyPressed() {
         }
     }
 
-    if (key === " ") {
+    if (keyCode === 32) { // SPACE
         paddle.setIncreasePower(true);
         pointsBonus = true; // will reset to false after key release
     }
 }
 
 function keyReleased() {
-    if (key === " ") {
+    // dont use "key" instead "keyCode" bcs "~" is returned in Firefox (why?)
+    if (keyCode === 32) { // SPACE
         paddle.setIncreasePower(false);
         pointsBonus = false;
     }
@@ -346,8 +347,6 @@ function draw() {
             paddle.moveRight();
         }
         paddle.show();
-
-        //let gamePoints = countBoxes * 5 + countStars * 1;
 
         ballsLeftDiv.html(ballsLeft);
         gamePointsDiv.html(gamePoints);
